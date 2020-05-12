@@ -1,20 +1,164 @@
 <!DOCTYPE html>
-<html>
-  <head>
-    <title>World population</title>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.min.js"></script>
+<html lang='sl'>
+<head>
+<title>Transperency</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.min.js"></script>
+<script src="http://d3js.org/d3.v5.min.js" charset="utf-8"></script>
+<meta charset='UTF-8'>
+<meta name="description" content="opis">
+<meta name="author" content="Tina Nemarnik">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<style type="text/css" media="screen">
+ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  margin: 0 auto;
+  text-align: center;
+}
+ul li {
+	display: inline;
+	text-align: center;
+	padding: 10px 20% 20px; /*top, left and right, bottom*/
+	}
+.block {
+  display: block;
+  width: 70%;
+  border: 1px solid #000000;
+  padding: 14px 28px;
+  font-size: 16px;
+  cursor: pointer;
+  text-align: center;
+  margin-bottom: 3px; 
+} 
 
-    <link rel="stylesheet" type="text/css" href="style.css">
-  </head>
-  <body>
-    <div class="wrapper">
-      <h1>World population over time</h1>
-      <h2>Number of people (in millions) living on earth, the last 500 years</h2>
-      <canvas id="bar-chart" width="800" height="450"></canvas>
+.container {
+      width:100%;
+    }
+.left {
+      width:50%;
+      float:left;
+      align-items: center;
+    }
+.right {
+      width:50%;
+      float:right;
+      align-items: center;
+    }
+
+.wrapper {
+	  max-width: 800px;
+	  margin: 50px auto;
+	}
+article section {
+	width: 45%;
+	height: 460px;
+        display: inline-block;
+	border: 1px solid #000000;
+}
+article#graph {
+	width: calc(90% + 8px);
+	height: 460px;
+        display: inline-block;
+	border: 1px solid #000000;
+}
+</style>
+
+</head>
+<body>
+<header>
+	<div class="container">
+   		<div class="left">
+			 <button type="button" class="block">Basics</button> 
+		</div>
+   		<div class="right">
+			 <button type="button" class="block">Graphs</button> 
+		</div>
+	</div>
+</header>
+<main>
+	<article id = 'stats' >
+		<section id='graf'>
+ 			<div class="wrapper">
+			      <canvas id="barchart" width="800" height="420"></canvas>
+			</div>
+		</section>
+		<section id='stats'>
+			
 
 
-    </div>
+		</section>
+	</article>
+	<article id = 'graph'>
+		<div class="wrapper">
+			<canvas id="bar-chart2" width="900" height="460"></canvas>
+		</div>
+	</article>
 
-    <script src="script.js"></script>
-  </body>
+</main>
+<script>
+	// Our labels along the x-axis
+	var years = [1500,1600,1700,1750,1800,1850,1900,1950,1999,2050];
+	// For drawing the lines
+	var africa = [86,114,106,106,107,111,133,221,783,2478];
+	var asia = [282,350,411,502,635,809,947,1402,3700,5267];
+	var europe = [168,170,178,190,203,276,408,547,675,734];
+	var latinAmerica = [40,20,10,16,24,38,74,167,508,784];
+	var northAmerica = [6,3,2,2,7,26,82,172,312,433];
+	var ctx = document.getElementById("myChart");
+	
+	function makeChart(spending) {
+	  // players is an array of objects where each object is something like:
+	  // {
+	  //   "Name": "Steffi Graf",
+	  //   "Weeks": "377",
+	  //   "Gender": "Female"
+	  // }
+
+	  var znesekData = spending.map(function(t) {
+	    return +t.znesek;
+	  });
+	  var prejemnikLabel = spending.map(function(t) {
+	    return t.Weeks;
+	  });
+
+	 var barchart = new Chart('barchart', {
+	    type: "bar",
+	    options: {
+	      maintainAspectRatio: false,
+	      legend: {
+		display: false
+	      }
+	    },
+	    data: {
+	      labels: prejemnikLabel,
+	      datasets: [
+		{
+		  data: znesekData
+		}
+	      ]
+	    }
+	  });
+}
+
+
+
+  d3.csv("/data/Erar-izola-test.csv", function(data) {
+    for (var i = 0; i < data.length; i++) {
+        console.log(data[i].id_dokumenta);
+        console.log(data[i].prejeto);
+	console.log(data[i].placnik);
+	console.log(data[i].prejemnik);
+	console.log(data[i].znesek);
+	console.log(data[i].zastopnik_dolznika);
+	console.log(data[i].upnik_trr);
+	console.log(data[i].upnik_banka)}})
+  .then(makeChart);
+
+</script>
+
+
+
+</body>
 </html>
