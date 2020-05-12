@@ -65,7 +65,6 @@ article#graph {
 }
 </style>
 
-</head>
 <body>
 <header>
 	<div class="container">
@@ -81,13 +80,10 @@ article#graph {
 	<article id = 'stats' >
 		<section id='graf'>
  			<div class="wrapper">
-			      <canvas id="barchart" width="800" height="420"></canvas>
+			      <canvas id="bar-chart" width="800" height="420"></canvas>
 			</div>
 		</section>
 		<section id='stats'>
-			
-
-
 		</section>
 	</article>
 	<article id = 'graph'>
@@ -107,58 +103,48 @@ article#graph {
 	var latinAmerica = [40,20,10,16,24,38,74,167,508,784];
 	var northAmerica = [6,3,2,2,7,26,82,172,312,433];
 	var ctx = document.getElementById("myChart");
-	
-	function makeChart(spending) {
-	  // players is an array of objects where each object is something like:
-	  // {
-	  //   "Name": "Steffi Graf",
-	  //   "Weeks": "377",
-	  //   "Gender": "Female"
-	  // }
 
-	  var znesekData = spending.map(function(t) {
-	    return +t.znesek;
-	  });
-	  var prejemnikLabel = spending.map(function(t) {
-	    return t.Weeks;
-	  });
-
-	 var barchart = new Chart('barchart', {
-	    type: "bar",
-	    options: {
-	      maintainAspectRatio: false,
-	      legend: {
-		display: false
-	      }
-	    },
+	new Chart(document.getElementById("bar-chart"), {
+	    type: 'bar',
 	    data: {
-	      labels: prejemnikLabel,
+	      labels: ["Africa", "Asia", "Europe", "Latin America", "North America"],
 	      datasets: [
 		{
-		  data: znesekData
+		  label: "Population (millions)",
+		  backgroundColor: ["#3e95cd", "#8e5ea2","#3cba9f","#e8c3b9","#c45850"],
+		  data: [2478,5267,734,784,433]
 		}
 	      ]
+	    },
+	    options: {
+	      legend: { display: false },
+	      title: {
+		display: true,
+		text: 'Predicted world population (millions) in 2050'
+	      }
 	    }
-	  });
-}
-
-
-
-  d3.csv("/data/Erar-izola-test.csv", function(data) {
-    for (var i = 0; i < data.length; i++) {
-        console.log(data[i].id_dokumenta);
-        console.log(data[i].prejeto);
-	console.log(data[i].placnik);
-	console.log(data[i].prejemnik);
-	console.log(data[i].znesek);
-	console.log(data[i].zastopnik_dolznika);
-	console.log(data[i].upnik_trr);
-	console.log(data[i].upnik_banka)}})
-  .then(makeChart);
-
+	});
+	new Chart(document.getElementById("bar-chart2"), {
+	    type: 'bar',
+	    data: {
+	      labels: ["Africa", "Asia", "Europe", "Latin America", "North America"],
+	      datasets: [
+		{
+		  label: "Population (millions)",
+		  backgroundColor: ["#3e95cd", "#8e5ea2","#3cba9f","#e8c3b9","#c45850"],
+		  data: [2478,5267,734,784,433]
+		}
+	      ]
+	    },
+	    options: {
+	      legend: { display: false },
+	      title: {
+		display: true,
+		text: 'Predicted world population (millions) in 2050'
+	      }
+	    }
+	});
+   
 </script>
-
-
-
 </body>
 </html>
