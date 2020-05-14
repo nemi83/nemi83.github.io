@@ -59,7 +59,7 @@ article section {
 }
 article#graph {
 	width: calc(90% + 8px);
-	height: 460px;
+	height: 500px;
         display: inline-block;
 	border: 1px solid #000000;
 }
@@ -233,7 +233,7 @@ body {
 	</article>
 	<article id = 'graph'>
 		<div class="wrapper">
-			<canvas id="bar-chart2" width="900" height="460"></canvas>
+			<canvas id="chart" width="900" height="460"></canvas>
 		</div>
 	</article>
 
@@ -269,26 +269,54 @@ body {
 	      }
 	    }
 	});
-	new Chart(document.getElementById("bar-chart2"), {
-	    type: 'bar',
-	    data: {
-	      labels: ["Africa", "Asia", "Europe", "Latin America", "North America"],
-	      datasets: [
-		{
-		  label: "Population (millions)",
-		  backgroundColor: ["#3e95cd", "#8e5ea2","#3cba9f","#e8c3b9","#c45850"],
-		  data: [2478,5267,734,784,433]
-		}
-	      ]
-	    },
-	    options: {
-	      legend: { display: false },
-	      title: {
-		display: true,
-		text: 'Predicted world population (millions) in 2050'
+
+function makeChart(players) {
+  // players is an array of objects where each object is something like:
+  // {
+  //   "Name": "Steffi Graf",
+  //   "Weeks": "377",
+  //   "Gender": "Female"
+  // }
+
+  var playerLabels = players.map(function(d) {
+    return d.prejemnik;
+  });
+  var weeksData = players.map(function(d) {
+    return +d.znesek;
+  });
+  var dateData = players.map(function(d) {
+    return d.prejeto_at_y_m;
+  });
+
+  var chart = new Chart('chart', {
+    type: "bar",
+    options: {
+      maintainAspectRatio: false,
+      legend: {
+        display: false
+      },
+      title: {
+	display: true,
+	text: 'Montlhy spending for the municipality of Izola'
 	      }
-	    }
-	});
+    },
+    data: {
+      labels: dateData,
+      datasets: [
+        {
+         
+	  data: weeksData, 
+	}
+]
+    }
+  });
+}
+// Request data using D3
+d3
+  .csv("https://github.com/nemi83/testdata/blob/master/izola-grupped.csv")
+  .then(makeChart);
+
+
    
 </script>
 </body>
