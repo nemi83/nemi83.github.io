@@ -317,22 +317,25 @@ d3
   .csv("https://raw.githubusercontent.com/nemi83/testdata/master/izola-grupped.csv")
   .then(makeChart1);
 
+//action on click week
 function onClickW(){
-      document.getElementById("0").addEventListener('click', () => {
       if (chart1 !== undefined){chart1.destroy();}
       data = d3.csv('https://raw.githubusercontent.com/nemi83/testdata/master/izola-grupped-year.csv').then(makeChart1);
+      document.getElementById("0").addEventListener('click', () => {
       });
 }
+//action on click month
 function onClickM(){
-      document.getElementById("1").addEventListener('click', () => {
       if (chart1 !== undefined){chart1.destroy();} 
       data = d3.csv('https://raw.githubusercontent.com/nemi83/testdata/master/izola-grupped-year.csv').then(makeChart1);
+      document.getElementById("1").addEventListener('click', () => {
       });
 }
+//action on click year
 function onClickY(){
-      document.getElementById("2").addEventListener('click', () => {
       if (chart1 !== undefined){chart1.destroy();}
       data = d3.csv('https://raw.githubusercontent.com/nemi83/testdata/master/izola-grupped-year.csv').then(makeChart1);
+      document.getElementById("2").addEventListener('click', () => { 
       });
 }
    
